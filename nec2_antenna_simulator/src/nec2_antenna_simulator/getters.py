@@ -1,17 +1,18 @@
 """Getter helpers"""
 
-def get_impedance(nec):
-  """Return the complex input impedance from the first NEC port.
+def get_impedance(nec, index):
+  """Return the complex input impedance for a given NEC input index.
 
   Parameters
   ----------
   nec : object
       NEC context with ``get_input_parameters`` available.
+  index : int
+      Input index to query.
 
   Returns
   -------
   complex
-      Complex impedance at the first input.
+      Complex impedance at the requested input.
   """
-  index = 0
   return nec.get_input_parameters(index).get_impedance()
