@@ -1,0 +1,13 @@
+services:
+  pynec:
+    build: .
+    ports: ["8888:8888"]
+    volumes:
+      - ./notebooks:/work/notebooks
+      - ./nec2_antenna_simulator:/work/nec2_antenna_simulator
+    command:
+      [
+        "sh",
+        "-c",
+        "pip install -e /work/nec2_antenna_simulator && jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token= --NotebookApp.password=",
+      ]
