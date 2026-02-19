@@ -24,7 +24,10 @@ RUN pip install --no-cache-dir \
     numpy \
     scipy \
     matplotlib \
-    plotly
+    plotly \
+    ipympl \
+    ipywidgets \
+    jupyterlab_widgets
 
 # Clone and build python-necpp (necpp + PyNEC)
 RUN git clone --recursive https://github.com/tmolteno/python-necpp.git \

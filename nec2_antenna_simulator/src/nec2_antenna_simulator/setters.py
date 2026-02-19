@@ -1,6 +1,14 @@
 """Helper functions to set the cards"""
 
 
+def _nec2_meta(nec):
+    meta = getattr(nec, "_nec2_meta", None)
+    if meta is None:
+        meta = {}
+        setattr(nec, "_nec2_meta", meta)
+    return meta
+
+
 def set_geometry(nec, wires, excitations):
     """Define geometry and excitations on the NEC context.
 
@@ -20,6 +28,10 @@ def set_geometry(nec, wires, excitations):
     object
         The same NEC context, for chaining.
     """
+    meta = _nec2_meta(nec)
+    meta["wires"] = list(wires)
+    meta["excitations"] = list(excitations)
+
     geo = nec.get_geometry()
 
     for i, wire in enumerate(wires):
@@ -48,8 +60,15 @@ def set_loads(nec, loads):
     object
         The same NEC context, for chaining.
     """
-    if len(loads) > 0:
-        nec.ld_card(*loads)
+    meta = _nec2_meta(nec)
+    if loads:
+        if isinstance(loads, tuple):
+            meta["loads"] = [loads]
+            nec.ld_card(*loads)
+        else:
+            meta["loads"] = list(loads)
+            for ld in loads:
+                nec.ld_card(*ld)
     return nec
 
 
@@ -69,6 +88,8 @@ def set_ground(nec, ground):
     object
         The same NEC context, for chaining.
     """
+    meta = _nec2_meta(nec)
+    meta["ground"] = tuple(ground)
     nec.gn_card(*ground)
     return nec
 
@@ -89,6 +110,8 @@ def set_frequency(nec, frequency):
     object
         The same NEC context, for chaining.
     """
+    meta = _nec2_meta(nec)
+    meta["frequency"] = tuple(frequency)
     nec.fr_card(*frequency)
     return nec
 
@@ -109,6 +132,8 @@ def set_radiation_pattern(nec, rad_pattern):
     object
         The same NEC context, for chaining.
     """
+    meta = _nec2_meta(nec)
+    meta["radiation_pattern"] = tuple(rad_pattern)
     nec.rp_card(*rad_pattern)
     return nec
 
