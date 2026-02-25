@@ -378,7 +378,7 @@ def plot_radiation_patterns(
             gains = p["gains"]
             phis = p["phis"]
             line_theta[r].set_ydata(gains[:, j])
-            ax[r, 0].set_title(f"f_idx={p['fi']}  |  θ cut (φ = {phis[j]:.1f}°)")
+            ax[r, 0].set_title(f"f={p['f']:.3f} MHz  |  θ cut (φ = {phis[j]:.1f}°)")
         fig.canvas.draw_idle()
 
     def update_theta(_val):
@@ -387,7 +387,7 @@ def plot_radiation_patterns(
             gains = p["gains"]
             thetas = p["thetas"]
             line_phi[r].set_ydata(gains[i, :])
-            ax[r, 1].set_title(f"f_idx={p['fi']}  |  φ cut (θ = {thetas[i]:.1f}°)")
+            ax[r, 1].set_title(f"f={p['f']:.3f} MHz  |  φ cut (θ = {thetas[i]:.1f}°)")
         fig.canvas.draw_idle()
 
     s_phi.on_changed(update_phi)
